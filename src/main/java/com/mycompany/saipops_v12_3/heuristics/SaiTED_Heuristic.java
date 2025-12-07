@@ -21,10 +21,10 @@ import java.util.TreeSet;
  * 
  *  
  */
-public   class SaiTED_HIGH_Heuristic  extends SaiBASE_Heuristic{
+public   class SaiTED_Heuristic  extends SaiBASE_Heuristic{
     //
        
-    public SaiTED_HIGH_Heuristic (  Set<Attributes> attributes ,     
+    public SaiTED_Heuristic (  Set<Attributes> attributes ,     
             TreeMap<String, Double>  objectiveFunctionMap  ){
           
         super(attributes ,   objectiveFunctionMap) ;

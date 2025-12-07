@@ -38,6 +38,8 @@ public abstract class SaiBASE_Heuristic {
     protected int lowestKnownPrimarySize = BILLION;
     protected  TreeMap<String , Double> primaryvariablesWithFrequency_AtLowestSize = new TreeMap<String , Double> ();
      
+    protected double largestKnownVice = DOUBLE_ZERO;
+    protected  TreeSet<String > fractionalPrimaryVariables_LargerThanVice = new TreeSet<String >();
     
     public SaiBASE_Heuristic (  Set<Attributes> attributes ,     
             TreeMap<String, Double>  objectiveFunctionMap  ){
@@ -84,16 +86,30 @@ public abstract class SaiBASE_Heuristic {
                     lowestKnownPrimaryDimension = attr.primaryDimension;                   
                     this.primaryVariablesWithFrequency_AtLowestDim.clear();  
                     
+                    fractionalPrimaryVariables_LargerThanVice.clear();
+                    largestKnownVice  = DOUBLE_ZERO;
+                    
                 }
                 if (lowestKnownPrimaryDimension == attr.primaryDimension){
+                    
+                    final double VICE = getVice (attr);
+                                        
+                    if (largestKnownVice < VICE)     {
+                        largestKnownVice = VICE;
+                        fractionalPrimaryVariables_LargerThanVice.clear();
+                    }
                     
                     for (String var: attr.fractionalPrimaryVariables ){
                         
                         Double currentFreq= primaryVariablesWithFrequency_AtLowestDim .get ( var);
                         if (null==currentFreq)currentFreq=DOUBLE_ZERO;
                         primaryVariablesWithFrequency_AtLowestDim .put ( var, currentFreq + DOUBLE_ONE);
-                         
-                    }                                                      
+                        
+                        if (largestKnownVice == VICE)   {                                                        
+                            if (VICE <= Math.abs (this.objectiveFunctionMap.get(var))) fractionalPrimaryVariables_LargerThanVice.add (var ); 
+                        }
+                    }  
+                                        
                 }   
                 
                 if (attr.constraintSize < lowestKnownPrimarySize){
@@ -143,5 +159,13 @@ public abstract class SaiBASE_Heuristic {
         TreeSet<String>  candidates   = new TreeSet<String> ();
         candidates.addAll( neutralVariables_WithScore.keySet());
         return     MathUtils.findMaxValue (candidates, neutralVariables_WithScore  ) ;        
+    }
+    
+    private double getVice (Attributes attr) {
+        double vice = DOUBLE_ZERO;
+        if (!attr.vice_ObjMagn_primaryVariable.isEmpty()){
+            vice = attr.vice_ObjMagn_primaryVariable.firstEntry().getValue();
+        }
+        return vice;
     }
 }

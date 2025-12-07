@@ -5,7 +5,6 @@
 package com.mycompany.saipops_v12_3.heuristics;
     
  
-import static com.mycompany.saipops_v12_3.Constants.*;
 import com.mycompany.saipops_v12_3.constraints.*;
 import com.mycompany.saipops_v12_3.utils.MathUtils;
 import java.util.ArrayList;
@@ -21,61 +20,33 @@ import java.util.TreeSet;
  * 
  *  
  */
-public   class SaiTED_LOW_Heuristic  extends SaiBASE_Heuristic{
+public   class SaiVICE_Heuristic  extends SaiBASE_Heuristic{
     //
        
-    public SaiTED_LOW_Heuristic (  Set<Attributes> attributes ,     
+    public SaiVICE_Heuristic (  Set<Attributes> attributes ,     
             TreeMap<String, Double>  objectiveFunctionMap  ){
           
         super(attributes ,   objectiveFunctionMap) ;
           
     }//end constructor method
     
-    
-    //Emphasize large number of 0 fixes in the down branch.
-    //Tie break on the largest objective magnitude
     @Override
     protected TreeSet<String>  selectBranchingVariable  (){
-         return null;
+        TreeSet<String>  winners = new  TreeSet<String> ();
+   
+        winners.addAll( getPrimaryOnlyVariables());
+        
+        if (winners.isEmpty()){
+            winners.addAll(this.fractionalPrimaryVariables_LargerThanVice );
+        }
+        
+        //highest obj magn
+        winners = MathUtils.getMaxObjMagn(winners, objectiveFunctionMap );
+        
+        //tie break on highest frequency
+        winners = MathUtils.getMaxiMinFrequency (winners, this.primaryVariablesWithFrequency_AtLowestDim, new  TreeMap<String, Double>  ())  ;  
+        
+        return winners;
     }    
-     
+   
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -18,13 +18,18 @@ import java.util.TreeSet;
  */
 public class Attributes {
     
+    public String constraintName ;
+    
     public int primaryDimension = BILLION; 
     public TreeSet<String   >  fractionalPrimaryVariables    = new TreeSet<String   > ();
     public TreeSet<String   >  allPrimaryVariables    = new TreeSet<String   > ();
     
+    public TreeMap<String, Double> highest_ObjMagn_primaryVariable = new TreeMap<String, Double> () ;
+    public TreeMap<String, Double> vice_ObjMagn_primaryVariable    = new TreeMap<String, Double> () ;
+    
     public int secondaryDimension = BILLION; 
     public TreeSet<String   >  fractionalSecondaryVariables    = new TreeSet<String   > ();
-    public TreeSet<String   >  allSecondaryVariables    = new TreeSet<String   > ();
+    
     
     public int constraintSize = -ONE;
     public TreeSet<String>  fractionalNeutralVariables = new TreeSet<String>(); 

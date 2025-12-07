@@ -78,12 +78,12 @@ public class SAIPOPS_Callback extends IloCplex.BranchCallback{
                 }
                 
                 SaiBASE_Heuristic branchingHeuristic  =new SaiPOPS_Heuristic(   attributes , objectiveFunctionMap );
-                if (HEURISTIC_TO_USE.equals(TED_HIGH)){
-                    branchingHeuristic =new SaiTED_HIGH_Heuristic(   attributes , objectiveFunctionMap );
+                if (HEURISTIC_TO_USE.equals(TED)){
+                    branchingHeuristic =new SaiTED_Heuristic(   attributes , objectiveFunctionMap );
                 }  else if (HEURISTIC_TO_USE.equals(SIZE)){
                     branchingHeuristic =new SaiSIZE_Heuristic(   attributes , objectiveFunctionMap );
-                }else if (HEURISTIC_TO_USE.equals(TED_LOW)){
-                    branchingHeuristic =new SaiTED_LOW_Heuristic(   attributes , objectiveFunctionMap );    
+                }else if (HEURISTIC_TO_USE.equals(VICE)){
+                    branchingHeuristic =new SaiVICE_Heuristic(   attributes , objectiveFunctionMap );    
                 }
                 
                 //always run the heuristic even if we use native cplex

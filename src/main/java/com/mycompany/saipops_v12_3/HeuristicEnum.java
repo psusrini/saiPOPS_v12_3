@@ -13,8 +13,8 @@ package com.mycompany.saipops_v12_3;
 public enum HeuristicEnum {
      
     POPS  ,  
-    TED_HIGH,
-    TED_LOW,
+    TED,
+    VICE,
     SIZE , // max obj in smallest sized constraint
  
     NATIVE_CPLEX;

@@ -105,7 +105,7 @@ public class LowerBoundConstraint {
         int numPrimaryVariablesExamined     = ZERO; 
         int numSecondaryVariablesExamined     = ZERO; 
         
-        
+        attr.constraintName = this.constraint_Name;
         attr.constraintSize =coefficientList.size();
        
         for (int index = ZERO; index < attr.constraintSize ; index ++ ){   
@@ -132,11 +132,37 @@ public class LowerBoundConstraint {
                         attr.primaryDimension=numPrimaryVariablesExamined- ONE;
                     }
                 }
+                
+                if (attr.highest_ObjMagn_primaryVariable.isEmpty()){
+                    attr.highest_ObjMagn_primaryVariable.put (triplet.varName  , thisObjMagn);
+                }else{
+                    if (thisObjMagn  > attr.highest_ObjMagn_primaryVariable.firstEntry().getValue()){
+                        
+                        attr.vice_ObjMagn_primaryVariable.clear();
+                        attr.vice_ObjMagn_primaryVariable.put (attr.highest_ObjMagn_primaryVariable.firstEntry().getKey() ,  
+                                attr.highest_ObjMagn_primaryVariable.firstEntry().getValue()) ;
+                        attr.highest_ObjMagn_primaryVariable.clear();
+                        attr.highest_ObjMagn_primaryVariable.put (triplet.varName  , thisObjMagn);
+                        
+                    } else {
+                        ///
+                        boolean cond1 = attr.vice_ObjMagn_primaryVariable.isEmpty();
+                        boolean cond2 = false;
+                        if (! cond1){
+                            cond2 = thisObjMagn > attr.vice_ObjMagn_primaryVariable.firstEntry().getValue();
+                        }
+                        if ( cond1 || cond2){
+                            attr.vice_ObjMagn_primaryVariable.clear();
+                            attr.vice_ObjMagn_primaryVariable.put (triplet.varName  , thisObjMagn);
+                        }
+                    }
+                }
+                
+                
                  
             } else if (triplet.significance.equals( SECONDARY)) {                
                 //secondary var   
                 
-                attr.allSecondaryVariables.add (triplet.varName);
                                                 
                 if (triplet.isFractional){
                     attr.fractionalSecondaryVariables.add (triplet.varName   );
@@ -160,7 +186,7 @@ public class LowerBoundConstraint {
                                         
             }//triplet significance if else
         }//for loop walking through coefficients in the constraint
-                            
+       
         return   attr  ;          
     }
      

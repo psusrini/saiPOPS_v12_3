@@ -50,7 +50,7 @@ public class Parameters {
     public static final int MAX_PERIODS =5;
     public static final int PERIOD_DURATION_IN_SECONDS =60*60; //60 minute periods
      
-    public static final HeuristicEnum HEURISTIC_TO_USE = HeuristicEnum.TED_LOW;
+    public static final HeuristicEnum HEURISTIC_TO_USE = HeuristicEnum.VICE;
     public static final Boolean USE_OPTIMISTIC_DIMENSIONING = true;
     
     public static final String PRESOLVED_MIP_FILENAME =              
